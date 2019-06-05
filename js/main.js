@@ -1,7 +1,7 @@
 function getAccount(name) {
 	return new Promise(function(resolve, reject) {
 		let getUrl = "http://127.0.0.1:8080/JavaEEServer-1.0/api/accounts/"+name;
-		
+
 	});
 }
 
@@ -13,7 +13,7 @@ function postAccount(jsonAccount, url) {
 		XHR.onreadystatechange = function () {
 			if (XHR.readyState === 4) {
 				if (XHR.status === 201) {
-					resolve("Your account was created. Try logging in.");
+					resolve(XHR.response);
 				} else {
 					reject("Error: Cannot create account. Try again or go away.");
 				}
