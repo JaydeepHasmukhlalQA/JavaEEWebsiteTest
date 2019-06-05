@@ -1,0 +1,21 @@
+body {
+    background-color: #0071BC;
+    color: #FCC800;
+}
+
+button.btn.btn-outline-primary.btn-lg {
+    background-color: #0071BC;
+    color: #FCC800;
+    border: #F4B886;
+}
+
+div.row.justify-content-center h1 {
+    white-space: nowrap;
+    margin-top: 15%;
+    padding: 5% 100% 5%;
+    background-color: #0071BC;
+}
+
+div.row.justify-content-center form {
+    background-color: #0071BC;
+}
