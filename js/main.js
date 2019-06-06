@@ -1,11 +1,24 @@
-function getAccount(name) {
+function getAccount(name) { //try-catch.
 	return new Promise(function(resolve, reject) {
 		let getUrl = "http://127.0.0.1:8080/JavaEEServer-1.0/api/accounts/"+name;
+		const XHR = new XMLHttpRequest();
 
+		XHR.onreadystatechange = function() {
+			if (XHR.readyState === 4) {
+				if (XHR.status === 200) {
+					resolve(XHR.response);
+				} else {
+					reject("Error: Account" + name + " not found. Please register.");
+				}
+			}
+		}
+
+		XHR.open('GET', getUrl, true);
+		XHR.send();
 	});
 }
 
-function postAccount(jsonAccount, url) {
+function postAccount(jsonAccount, url) { //try-catch.
 	return new Promise(function (resolve, reject) {
 		let postUrl = "http://127.0.0.1:8080/JavaEEServer-1.0/api/accounts/"
 		const XHR = new XMLHttpRequest();
@@ -13,10 +26,10 @@ function postAccount(jsonAccount, url) {
 		XHR.onreadystatechange = function () {
 			if (XHR.readyState === 4) {
 				if (XHR.status === 201) {
-					resolve(XHR.response);
+					resolve("Successfully registered. Please login.");
 				} else {
 					reject("Error: Cannot create account. Try again or go away.");
-				}
+				} 
 			}
 		}
 
@@ -26,9 +39,53 @@ function postAccount(jsonAccount, url) {
 	});
 }
 
+function updateAccount() {
+	return new Promise(function(resolve, reject) {
+		
+	});
+}
+
+function loadSessionAccount() {
+	let account = JSON.parse(sessionStorage.getItem("user"));
+	let {id} = account;
+	let {name} = account;
+
+	document.getElementById("id").value = id;
+	document.getElementById("name").value = name;
+}
+
+function modifyAccount() {
+	let thisButton = document.getElementById("editButton");
+
+	if (thisButton.textContent === "Edit") {
+		enableEdit(thisButton)
+	} else if (thisButton.textContent === "Save") {
+		updateAccount(thisButton)
+	}
+}
+
+function enableEdit(button) {
+	let nameInput = document.getElementById("name");
+	nameInput.readOnly = false;
+	button.textContent = "Save";
+}
+
+function updateAccount(button) {
+
+}
+
 function getAccountByName() {
 	let name = document.getElementById("loginForm").elements["name"].value;
+	let retrievedJson = getAccount(name).then((value) => {
+		sessionStorage.setItem("user", value);
+		window.location.assign("account.html");
+		return false;
+	}).catch((value) => {
+		let message = document.getElementById("messageToUser");
+		message.innerHTML = value;
+	});
 
+	return false;
 }
 
 function submitAccount() {
@@ -45,7 +102,9 @@ function submitAccount() {
 
 	postAccount(jsonString).then((value) => {
 		message.innerHTML = value;
-	});
+	}).catch((value) => {
+		message.innerHTML = value;
+	});;
 
 	return false;
 }

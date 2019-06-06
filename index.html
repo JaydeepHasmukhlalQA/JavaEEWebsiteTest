@@ -18,7 +18,7 @@
 
   <div class="container-fluid">
     <div class="row justify-content-center">
-      <form id="loginForm" onsubmit="return submitAccount();">
+      <form id="loginForm">
         <fieldset>
           <p>
             <label>Login:</label>
@@ -26,8 +26,8 @@
           </p>
           <div class="row justify-content-center">
             <p>
-              <button type="submit" class="btn btn-outline-primary btn-lg">Login</button>
-              <button class="btn btn-outline-primary btn-lg" onclick="getAccountByName();">Register</button>
+              <button class="btn btn-outline-primary btn-lg" onclick="return getAccountByName();">Login</button>
+              <button class="btn btn-outline-primary btn-lg" onclick="return submitAccount();">Register</button>
             </p>
           </div>
         </fieldset>
